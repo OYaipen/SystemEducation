@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"Dashboard":"Dashboard","Profile":"Profile"}[chunkId]||chunkId) + ".js"
+/******/ 		return __webpack_require__.p + "" + ({"Dashboard":"Dashboard","Profile":"Profile","Users":"Users"}[chunkId]||chunkId) + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -52533,6 +52533,12 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
       return __webpack_require__.e(/*! import() | Dashboard */ "Dashboard").then(__webpack_require__.bind(null, /*! ./components/Dashboard */ "./resources/js/components/Dashboard.vue"));
     },
     name: 'Dashboard'
+  }, {
+    path: '/users',
+    component: function component() {
+      return __webpack_require__.e(/*! import() | Users */ "Users").then(__webpack_require__.bind(null, /*! ./components/Users */ "./resources/js/components/Users.vue"));
+    },
+    name: 'users'
   }]
 }));
 

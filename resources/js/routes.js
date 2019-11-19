@@ -16,5 +16,10 @@ export default new Router({
             component: () => import(/* webpackChunkName: "Dashboard" */ './components/Dashboard'),
             name: 'Dashboard'
         },
+         {
+            path: '/users',
+            component: () => import(/* webpackChunkName: "Users" */ './components/Users'),
+            name: 'users'
+        },
     ]
 })

@@ -59,7 +59,7 @@
                                 </p>
                             </router-link>
                         </li>
-                        @can('isAdmin')
+                        {{-- @can('isAdmin') --}}
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fa fa-cog green"></i>
@@ -85,7 +85,7 @@
                                 </p>
                             </router-link>
                         </li>
-                        @endcan
+                        {{-- @endcan --}}
                         <li class="nav-item">
                             <router-link to="/profile" class="nav-link">
                                 <i class="nav-icon fas fa-user orange"></i>
@@ -125,11 +125,11 @@
             <strong>Owen Yaipen Saba</strong>
         </footer>
     </div>
-    @auth
+    {{-- @auth
     <script>
         window.user = @json(auth() -> user())
     </script>
-    @endauth
+    @endauth --}}
     <script src="/js/app.js"></script>
 </body>
 
