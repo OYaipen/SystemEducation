@@ -20,10 +20,10 @@
                 </li>
             </ul>
             <div class="input-group input-group-sm">
-                <input class="form-control form-control-navbar"{{--  @keyup="searchit" v-model="search" --}} type="search"
+                <input class="form-control form-control-navbar" @keyup="searchit" v-model="search" type="search"
                     placeholder="Buscar" aria-label="Search">
                 <div class="input-group-append">
-                    <button class="btn btn-navbar" {{-- @click="searchit" --}}>
+                    <button class="btn btn-navbar" @click="searchit">
                         <i class="fa fa-search"></i>
                     </button>
                 </div>
@@ -42,9 +42,9 @@
                         <img src="./img/avatar.png" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">
+                        <a href="#" class="d-block text-capitalize">
                             {{Auth::user()->name}}
-                            <p>{{Auth::user()->type}}</p>
+                            <p >{{Auth::user()->type}}</p>
                         </a>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                                 </p>
                             </router-link>
                         </li>
-                        {{-- @can('isAdmin') --}}
+                        @can('isAdmin')
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fa fa-cog green"></i>
@@ -85,7 +85,7 @@
                                 </p>
                             </router-link>
                         </li>
-                        {{-- @endcan --}}
+                        @endcan
                         <li class="nav-item">
                             <router-link to="/profile" class="nav-link">
                                 <i class="nav-icon fas fa-user orange"></i>
@@ -125,11 +125,11 @@
             <strong>Owen Yaipen Saba</strong>
         </footer>
     </div>
-    {{-- @auth
+    @auth
     <script>
         window.user = @json(auth() -> user())
     </script>
-    @endauth --}}
+    @endauth
     <script src="/js/app.js"></script>
 </body>
 

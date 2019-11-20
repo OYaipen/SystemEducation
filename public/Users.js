@@ -163,6 +163,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -180,8 +186,16 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    updateUser: function updateUser() {
+    getResults: function getResults() {
       var _this = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get("api/user?page=" + page).then(function (response) {
+        _this.users = response.data;
+      });
+    },
+    updateUser: function updateUser() {
+      var _this2 = this;
 
       this.$Progress.start(); // console.log('Editing data');
 
@@ -190,11 +204,11 @@ __webpack_require__.r(__webpack_exports__);
         $("#addNew").modal("hide");
         swal.fire("Actualizado!", "La información ha sido actualizada.", "success");
 
-        _this.$Progress.finish();
+        _this2.$Progress.finish();
 
         Fire.$emit("AfterCreate");
       })["catch"](function () {
-        _this.$Progress.fail();
+        _this2.$Progress.fail();
       });
     },
     editModal: function editModal(user) {
@@ -209,7 +223,7 @@ __webpack_require__.r(__webpack_exports__);
       $("#addNew").modal("show");
     },
     deleteUser: function deleteUser(id) {
-      var _this2 = this;
+      var _this3 = this;
 
       swal.fire({
         title: "¿Estás seguro?",
@@ -222,7 +236,7 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: "Si, bórralo!"
       }).then(function (result) {
         if (result.value) {
-          _this2.form["delete"]("api/user/" + id).then(function () {
+          _this3.form["delete"]("api/user/" + id).then(function () {
             swal.fire("¡Eliminado!", "Su archivo ha sido eliminado.", "success");
             Fire.$emit("AfterCreate");
           })["catch"](function () {
@@ -232,51 +246,47 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     loadUsers: function loadUsers() {
-      var _this3 = this;
+      var _this4 = this;
 
-      axios.get("api/user").then(function (_ref) {
-        var data = _ref.data;
-        return _this3.users = data;
-      });
+      if (this.$gate.isAdminOrAuthor()) {
+        axios.get("api/user").then(function (_ref) {
+          var data = _ref.data;
+          return _this4.users = data;
+        });
+      }
     },
     createUser: function createUser() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.$Progress.start();
       this.form.post("api/user").then(function () {
         Fire.$emit("AfterCreate");
         $("#addNew").modal("hide");
-        Toast.fire({
+        toast.fire({
           type: "success",
-          title: "Actualizado exitosamente"
+          title: "Creado Exitosamente"
         });
 
-        _this4.$Progress.finish();
-      })["catch"](function () {
-        $("#addNew").modal("hide");
-        swal.fire("Ha Fallado!", "Algo andaba mal.", "warning");
-      });
+        _this5.$Progress.finish();
+      })["catch"](function () {});
     }
   },
   mounted: function mounted() {
     console.log("Component mounted.");
   },
   created: function created() {
-    var _this5 = this;
+    var _this6 = this;
 
-    // Fire.$on("searching", () => {
-    //   let query = this.$parent.search;
-    //   axios
-    //     .get("api/findUser?q=" + query)
-    //     .then(data => {
-    //       this.users = data.data;
-    //     })
-    //     .catch(() => {});
-    // });
+    Fire.$on("searching", function () {
+      var query = _this6.$parent.search;
+      axios.get("api/findUser?q=" + query).then(function (data) {
+        _this6.users = data.data;
+      })["catch"](function () {});
+    });
     this.loadUsers();
     Fire.$on("AfterCreate", function () {
-      _this5.loadUsers();
-    }); // setInterval(() => this.loadUsers(), 3000);
+      _this6.loadUsers();
+    });
   }
 });
 
@@ -298,88 +308,109 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row mt-5" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _c("h3", { staticClass: "card-title" }, [
-              _vm._v("Tabla de Usuarios")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-tools" }, [
+    _vm.$gate.isAdminOrAuthor()
+      ? _c("div", { staticClass: "row mt-5" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _c("h3", { staticClass: "card-title" }, [
+                  _vm._v("Tabla de Usuarios")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-tools" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      attrs: {
+                        "data-toggle": "modal",
+                        "data-target": "#addNew"
+                      },
+                      on: { click: _vm.newModal }
+                    },
+                    [
+                      _vm._v("\n              Agregar\n              "),
+                      _c("i", { staticClass: "fas fa-user-plus fa-fw" })
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body table-responsive p-0" }, [
+                _c("table", { staticClass: "table table-hover" }, [
+                  _c(
+                    "tbody",
+                    [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _vm._l(_vm.users.data, function(user) {
+                        return _c("tr", { key: user.id }, [
+                          _c("td", [_vm._v(_vm._s(user.id))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(user.name))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(user.email))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("upText")(user.type)))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("myDate")(user.created_at)))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "a",
+                              {
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.editModal(user)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-edit blue" })]
+                            ),
+                            _vm._v("\n                  /\n                  "),
+                            _c(
+                              "a",
+                              {
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deleteUser(user.id)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-trash red" })]
+                            )
+                          ])
+                        ])
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ]),
+              _vm._v(" "),
               _c(
-                "button",
-                {
-                  staticClass: "btn btn-success",
-                  attrs: { "data-toggle": "modal", "data-target": "#addNew" },
-                  on: { click: _vm.newModal }
-                },
+                "div",
+                { staticClass: "card-footer" },
                 [
-                  _vm._v("\n              Agregar\n              "),
-                  _c("i", { staticClass: "fas fa-user-plus fa-fw" })
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body table-responsive p-0" }, [
-            _c("table", { staticClass: "table table-hover" }, [
-              _c(
-                "tbody",
-                [
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _vm._l(_vm.users.data, function(user) {
-                    return _c("tr", { key: user.id }, [
-                      _c("td", [_vm._v(_vm._s(user.id))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(user.name))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(user.email))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(_vm._f("upText")(user.type)))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("myDate")(user.created_at)))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "#" },
-                            on: {
-                              click: function($event) {
-                                return _vm.editModal(user)
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "fa fa-edit blue" })]
-                        ),
-                        _vm._v("\n                  /\n                  "),
-                        _c(
-                          "a",
-                          {
-                            attrs: { href: "#" },
-                            on: {
-                              click: function($event) {
-                                return _vm.deleteUser(user.id)
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "fa fa-trash red" })]
-                        )
-                      ])
-                    ])
+                  _c("pagination", {
+                    attrs: { data: _vm.users },
+                    on: { "pagination-change-page": _vm.getResults }
                   })
                 ],
-                2
+                1
               )
             ])
           ])
         ])
-      ])
-    ]),
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.$gate.isAdminOrAuthor() ? _c("div", [_c("not-found")], 1) : _vm._e(),
     _vm._v(" "),
     _c(
       "div",

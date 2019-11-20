@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="row mt-5">
+    <div class="row mt-5" v-if="$gate.isAdminOrAuthor()">
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
@@ -48,8 +48,14 @@
               </tbody>
             </table>
           </div>
+          <div class="card-footer">
+            <pagination :data="users" @pagination-change-page="getResults"></pagination>
+          </div>
         </div>
       </div>
+    </div>
+    <div v-if="!$gate.isAdminOrAuthor()">
+      <not-found></not-found>
     </div>
     <!-- Modal -->
     <div
@@ -170,6 +176,11 @@ export default {
     };
   },
   methods: {
+    getResults(page = 1) {
+      axios.get("api/user?page=" + page).then(response => {
+        this.users = response.data;
+      });
+    },
     updateUser() {
       this.$Progress.start();
       // console.log('Editing data');
@@ -232,7 +243,9 @@ export default {
         });
     },
     loadUsers() {
-      axios.get("api/user").then(({ data }) => (this.users = data));
+      if (this.$gate.isAdminOrAuthor()) {
+        axios.get("api/user").then(({ data }) => (this.users = data));
+      }
     },
     createUser() {
       this.$Progress.start();
@@ -241,36 +254,32 @@ export default {
         .then(() => {
           Fire.$emit("AfterCreate");
           $("#addNew").modal("hide");
-          Toast.fire({
+          toast.fire({
             type: "success",
-            title: "Actualizado exitosamente"
+            title: "Creado Exitosamente"
           });
           this.$Progress.finish();
         })
-        .catch(() => {
-          $("#addNew").modal("hide");
-          swal.fire("Ha Fallado!", "Algo andaba mal.", "warning");
-        });
+        .catch(() => {});
     }
   },
   mounted() {
     console.log("Component mounted.");
   },
   created() {
-    // Fire.$on("searching", () => {
-    //   let query = this.$parent.search;
-    //   axios
-    //     .get("api/findUser?q=" + query)
-    //     .then(data => {
-    //       this.users = data.data;
-    //     })
-    //     .catch(() => {});
-    // });
+    Fire.$on("searching", () => {
+      let query = this.$parent.search;
+      axios
+        .get("api/findUser?q=" + query)
+        .then(data => {
+          this.users = data.data;
+        })
+        .catch(() => {});
+    });
     this.loadUsers();
     Fire.$on("AfterCreate", () => {
       this.loadUsers();
     });
-    // setInterval(() => this.loadUsers(), 3000);
   }
 };
 </script>
