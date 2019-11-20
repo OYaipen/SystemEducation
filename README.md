@@ -1,6 +1,6 @@
-# AppSchool
+# SystemEducation
 
-Aplicacion para la administración de colegios, modulos con autenticación de usuarios y rutas protegidas
+SPA para la administración de colegios, modulos con autenticación de usuarios y rutas protegidas
 
 ## Instralación
 
