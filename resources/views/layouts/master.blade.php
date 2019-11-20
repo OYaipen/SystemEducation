@@ -44,7 +44,7 @@
                     <div class="info">
                         <a href="#" class="d-block text-capitalize">
                             {{Auth::user()->name}}
-                            <p >{{Auth::user()->type}}</p>
+                            <p>{{Auth::user()->type}}</p>
                         </a>
                     </div>
                 </div>
