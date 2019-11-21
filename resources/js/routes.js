@@ -8,27 +8,27 @@ export default new Router({
     routes: [
         {
             path: '/dashboard',
-            component: () => import(/* webpackChunkName: "Profile" */ './components/Dashboard'),
+            component: () => import(/* webpackChunkName: "Profile" */ './components/dashboard/Dashboard'),
             name: 'prifile'
         },
         {
             path: '/profile',
-            component: () => import(/* webpackChunkName: "Dashboard" */ './components/Profile'),
+            component: () => import(/* webpackChunkName: "Dashboard" */ './components/profile/Profile'),
             name: 'Dashboard'
         },
         {
             path: '/users',
-            component: () => import(/* webpackChunkName: "Users" */ './components/Users'),
+            component: () => import(/* webpackChunkName: "Users" */ './components/admin/Users'),
             name: 'users'
         },
         {
             path: '/developer',
-            component: () => import(/* webpackChunkName: "Developer" */ './components/Developer'),
+            component: () => import(/* webpackChunkName: "Developer" */ './components/developer/Developer'),
             name: 'developer'
         },
         {
             path: '/*',
-            component: () => import(/* webpackChunkName: "NotFound" */ './components/NotFound'),
+            component: () => import(/* webpackChunkName: "NotFound" */ './components/404/NotFound'),
             name: 'notfound'
         },
     ]

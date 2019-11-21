@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="row mt-5" v-if="$gate.isAdminOrAuthor()">
+    <div class="row mt-5" v-if="$gate.isAdminOrDeveloper()">
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
@@ -54,7 +54,7 @@
         </div>
       </div>
     </div>
-    <div v-if="!$gate.isAdminOrAuthor()">
+    <div v-if="!$gate.isAdminOrDeveloper()">
       <not-found></not-found>
     </div>
     <!-- Modal -->
@@ -123,12 +123,13 @@
                   v-model="form.type"
                   id="type"
                   class="form-control"
+                  aria-placeholder=""
                   :class="{ 'is-invalid': form.errors.has('type') }"
                 >
-                  <option value>Seleccionar Rol Del Usuario</option>
-                  <option value="admin">Admin</option>
+                  <option value="" disabled selected>Seleccionar Rol Del Usuario</option>
                   <option value="user">Usuariao Standard</option>
-                  <option value="author">Autor</option>
+                  <option value="admin">Admin</option>
+                  <option value="developer" v-if="$gate.isDeveloper()">Developer</option>
                 </select>
                 <has-error :form="form" field="type"></has-error>
               </div>
@@ -243,7 +244,7 @@ export default {
         });
     },
     loadUsers() {
-      if (this.$gate.isAdminOrAuthor()) {
+      if (this.$gate.isAdminOrDeveloper()) {
         axios.get("api/user").then(({ data }) => (this.users = data));
       }
     },

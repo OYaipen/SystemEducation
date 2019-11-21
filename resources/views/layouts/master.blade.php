@@ -21,7 +21,7 @@
             </ul>
             <div class="input-group input-group-sm">
                 <input class="form-control form-control-navbar" @keyup="searchit" v-model="search" type="search"
-                    placeholder="Buscar" aria-label="Search">
+                    placeholder="Buscar" aria-label="Search" style="font-size: 16px;">
                 <div class="input-group-append">
                     <button class="btn btn-navbar" @click="searchit">
                         <i class="fa fa-search"></i>
@@ -59,7 +59,7 @@
                                 </p>
                             </router-link>
                         </li>
-                        @can('isAdmin')
+                        @if(Gate::check('isAdmin') || Gate::check('isDeveloper'))
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fa fa-cog green"></i>
@@ -77,6 +77,8 @@
                                 </li>
                             </ul>
                         </li>
+                        @endcan
+                        @can('isDeveloper')
                         <li class="nav-item">
                             <router-link to="/developer" class="nav-link">
                                 <i class="nav-icon fas fa-cogs"></i>
