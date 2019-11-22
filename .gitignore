@@ -8,6 +8,8 @@
 /public/fonts
 /public/*.json
 /storage/*.key
+# /public/img/profile/*.jpg
+# /public/img/profile/*.png
 /vendor
 .env
 .env.backup

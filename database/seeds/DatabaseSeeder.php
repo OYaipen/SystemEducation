@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'administrador@systemedu.com',
             'password' => bcrypt('admin1999'),
             'type' => 'admin',
+            'photo'=>'avatar.png'
         ]);
     }
 }
