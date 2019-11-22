@@ -184,11 +184,9 @@ export default {
     },
     updateUser() {
       this.$Progress.start();
-      // console.log('Editing data');
       this.form
         .put("api/user/" + this.form.id)
         .then(() => {
-          // success
           $("#addNew").modal("hide");
           swal.fire(
             "Actualizado!",
@@ -257,7 +255,8 @@ export default {
           $("#addNew").modal("hide");
           toast.fire({
             type: "success",
-            title: "Creado Exitosamente"
+            title: "Creado Exitosamente",
+            icon:"success"
           });
           this.$Progress.finish();
         })

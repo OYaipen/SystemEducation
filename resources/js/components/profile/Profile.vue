@@ -117,7 +117,7 @@
                         v-model="form.password"
                         class="form-control"
                         id="password"
-                        placeholder="Passport"
+                        placeholder="Contraseña"
                         :class="{ 'is-invalid': form.errors.has('password') }"
                       />
                       <has-error :form="form" field="password"></has-error>
@@ -178,6 +178,11 @@ export default {
         .put("api/profile")
         .then(() => {
           Fire.$emit("AfterCreate");
+          toast.fire({
+            type: "success",
+            title: "Perfil Actualizado Exitosamente",
+            icon:"success"
+          });
           this.$Progress.finish();
         })
         .catch(() => {
@@ -193,7 +198,7 @@ export default {
         swal({
           type: "error",
           title: "Oops...",
-          text: "You are uploading a large file"
+          text: "Estás cargando un archivo grande"
         });
         return false;
       }
