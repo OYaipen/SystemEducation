@@ -18,5 +18,19 @@ class DatabaseSeeder extends Seeder
             'type' => 'admin',
             'photo'=>'avatar.png'
         ]);
+        DB::table('users')->insert([
+            'name' => 'Developer',
+            'email' => 'developer@systemedu.com',
+            'password' => bcrypt('developer1999'),
+            'type' => 'developer',
+            'photo'=>'avatar.png'
+        ]);
+        DB::table('users')->insert([
+            'name' => 'user',
+            'email' => 'user@systemedu.com',
+            'password' => bcrypt('user1999'),
+            'type' => 'admin',
+            'photo'=>'avatar.png'
+        ]);
     }
 }

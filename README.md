@@ -4,7 +4,7 @@ SPA para la administración de colegios, modulos con autenticación de usuarios 
 
 ## Instralación
 
-Primero Instale ejecute las instalaciones composer y npm.
+Primero Instale composer y npm.
 
 ```bash
 composer install
@@ -47,8 +47,17 @@ Ejecute la el comando para levantar el servidor:
 php artisan serve
 ```
 visualice en localhost:8000
+```
 email: administrador@systemedu.com
 contraseña: admin1999
-
+```
+```
+email: developer@systemedu.com
+contraseña: developer1999
+```
+```
+email: user@systemedu.com
+contraseña: user1999
+```
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
