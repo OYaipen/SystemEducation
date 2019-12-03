@@ -60,7 +60,7 @@
                             </router-link>
                         </li>
                         @if(Gate::check('isAdmin') || Gate::check('isDeveloper'))
-                        <li class="nav-item has-treeview">
+                        <li class2002="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fa fa-cog green"></i>
                                 <p>

@@ -2,7 +2,7 @@
 
 SPA para la administración de colegios, modulos con autenticación de usuarios y rutas protegidas
 
-## Instralación
+## Instalación
 
 Primero Instale composer y npm.
 
